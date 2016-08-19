@@ -32,5 +32,5 @@
   原作者用swiper.js这个框架来搭建的结构，我感觉项目里面滑屏事件很少，我就用原生的触摸事件来实现。其实就用到了touchstart来代替swiper的tap事件。（我不是作者，只是练习而已）
 	  
 	  
-####[练习demo]()
+####[练习demo](https://herohql521.github.io/H5-Practice-one-Phone/)
 ####[原作者demo](http://case.valuepr.net/nbh5/index.php)
