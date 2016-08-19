@@ -144,6 +144,10 @@ var Game = function(){
 	game.queueImage("ui/zfb_open.png");
 	game.queueImage("ui/zfb_tishi.png");
 	
+    function hide(){
+		document.getElementById("section0").style.display = "none";
+	};
+
 
 	var interval = setInterval(function(e){
 		loadingPercentComplete = game.loadImages();
@@ -157,7 +161,4 @@ var Game = function(){
 		}
 	},50);
 
-	function hide(){
-		document.getElementById("section0").style.display = "none";
-	}
-
+	
