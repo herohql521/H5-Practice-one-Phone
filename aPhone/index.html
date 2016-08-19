@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script>
+	//缩放比例
+		var phoneScale = parseInt(screen.width)/640;
+		document.write('<meta name="viewport"  content="width=640, minimum-scale='+ phoneScale + ', maximum-scale= '+phoneScale+', initial-scale= '+phoneScale+', user-scalable=no"/>')
+	</script>
+	<script src="./loadImages.js"></script>
+	
+	<title>一个手机</title>
+	<style>
+		*{margin:0; padding:0;}
+		html,body{width:640px; height:100%; overflow:hidden;}
+		img{border:none; vertical-align:top; width:100%; display:block;}
+		body{position:relative; font:24px/36px Arial;}
+		.section0{position:absolute; top:0; left:0; bottom:0; right:0; margin:auto; width:100%; height:100%; overflow:hidden;z-index: 9999; background:url(ui/loading.jpg) top center; background-size:cover;}
+		.loading_logo{width:100px;position:absolute; top:20%;left:270px;}
+		.loading{position:absolute; top:36%; width:100%; font-size:24px;line-height:32px; text-align:center; color:#fff; font-family:Arial; -webkit-text-size-adjust:none;}
+		.section1{position: absolute;top:0; left:0; right:0; bottom:0; margin:auto; width:100%; height:100%; overflow:hidden; z-index:10;}
+		.bd{position:absolute;width:100%; height:100%; background:url(ui/page_bg2.jpg) center center; background-size:100% 100%;}
+		.sceen1{position:absolute; top:35px; width:640px; height:100%;}
+		.icons{width:120px; height:155px; margin:10px 20px; position:relative; float:left;}
+		.icons img {width:100%; height:auto; display:block;}
+		.icons span {background:#f6242d; position:absolute; top:-20px; right:-20px; color:#fff; border-radius:20px; padding:3px 10px;}
+		.dian {width:640px; height:15px; float:left;}
+		.dian img {width:81px; height:16px; margin:20px auto; display:block;}
+		.btn_icon{width:640px; height:190px; background:url(ui/page_icon.png) center center; position:absolute; bottom:2%;left:0;}
+		.section2{width:640px; height:100%; display:none; position:absolute;top:0; z-index:11; overflow:hidden;}
+		.section3{width:640px; height:100%; display:none; position:absolute;top:0; z-index:11; overflow:hidden;}
+		.section4{width:640px; height:100%; display:none; position:absolute;top:0; z-index:99; overflow:hidden;}
+		.sqzhifu{width:640px; height:100%; display:none; position:absolute;top:0; z-index:15; overflow:hidden; background-color: #fff;}
+		.luantan{width:100%; height:100%; position:absolute;display:none;z-index:16;overflow:hidden;}
+		.lt_1{position:absolute; width:279px;top:40%;left:20%; display:none;}
+		.lt_2{position:absolute;width:279px;top:50%; left:60%; display:none;}
+		.lt_3{position:absolute;width:279px;top:60%;left:40%; display:none;}
+		.lt_4{position:absolute; width:300px; top:20%; left:30%; display:none;}
+		.lt_5{position:absolute; width:284px; top:10%; left:5%; display:none;}
+		.lt_6{position:absolute; width:206px;top:30%;left:50%; display:none;}
+		.lt_7{position:absolute; width:206px;top:5%; left:50%; display:none;}
+		.lt_8{position:absolute;width:206px;top:70%;left:40%; display:none;}
+		.lt_9{position:absolute; width:100%; height:100%; top:0; left:0; display:none;}
+		.zf_1{width:640px; height:832px; position:absolute; top:0; background:url(ui/zfb_3.png);}
+		.zf_left{position:absolute; width:303px; height:90px; left:2%; top:862px;}
+		.zf_right{position:absolute; width:303px; height:90px; right:2%; top:862px;}
+		#mask{width:640px; height:100%; background:#000; opacity:0.8; position:absolute;}
+		#mask2{width:640px; height:100%; background:#000; opacity:0.8; position:absolute; display:none; z-index:14;}
+		#messages,.weixin,.message2,.message3{width:400px; height:210px; position:absolute; z-index:12; top:30%; left:20%;}
+		.message2{display:none; z-index:15;}
+		.message3{display:none; z-index:15;}
+		#mes1{width:400px;height:148px; display:none; overflow:hidden;}
+		#mes2{width:400px; height:163px; display:none; overflow:hidden;}
+		.mes3,.mes4{width:400px; height:140px;}
+
+		#leftBtn{width:400px; height:66px; display:block; }
+
+		.weixin{display:none;}
+		.xiaoxi{width:400px; height:140px;display:block; overflow:hidden; float:left;}
+		.leftBtn2,.leftBtn3{width:200px; height:66px; display:block; float:left;}
+		.rightBtn{width:200px; height:66px; display:block; float:left;}
+
+		.wx_index{width:640px; height:100%; background:#fff; z-index:13; position:absolute; display:none;}
+		.wx{position:relative; width:640px; }
+		.wx0{height:58px; }
+		.wx p{position:absolute; font-size:30px; line-height:58px; text-align:center; top:0; color:#fff; display:block; width:100%;}
+		.wx span {background: #f6242d; position: absolute; top:5px; left:72px; color:#FFF; border-radius:25px; padding: 0px 12px;}
+		.wx8{position: absolute; height: 78px; bottom: 0;}
+		.tc_wx{width:640px;height:100%;background:#fff;z-index:14;position:absolute;display:none;}
+		.wxtc{height:246px; width:521px; top:40px; left:20px;}
+		.call_11{position:absolute; top:105px; left:100px; width:423px; height:105px; }
+		.call_2{position:absolute; width:125px; height:165px; bottom:10%; left:90px;}
+		.call_3{position:absolute; width:125px; height:165px; bottom:10%; right:100px; -webkit-animation: tada 2s linear  infinite;}
+		.call_15{position:absolute; top:0; left:0; width:100%; height:100%; z-index:16; display:none;}
+		.call_4{position:absolute; width:125px; height:165px; right:40%; bottom:10%; z-index:17;}
+		.txsp{width:490px; height:255px; position:absolute; z-index:18;top:30%;left:12%; display:none;}
+		.txsp_1{width:489px; height:172px; float:left;}
+		.txsp_2{width:489px; height:81px; float:left;}
+		.wz_1{position:absolute; width:640px;height:58px; top:190px;display:none;}
+		.wz_2{position:absolute; width:640px;height:38px; top:290px;display:none;}
+		.wz_3{position:absolute; width:640px;height:47px; top:360px;display:none;}
+		.wz_4{position:absolute; width:640px;height:38px; top:440px;display:none;}
+		.wz_5{position:absolute; width:640px;height:36px; top:550px;display:none;}
+		.wz_6{position:absolute; width:640px;height:36px; top:600px;display:none;}
+		.wz_7{position:absolute; width:640px;height:36px; top:650px;display:none;}
+		.wz_8{position:absolute; width:640px;height:33px; top:770px;display:none;}
+		.shang{position:absolute; width:46px; height:46px; bottom:5%; right:45%; -webkit-animation: dianhuo 2s linear infinite alternate;display:none;}
+		
+			@keyframes dianhuo{
+				0%{opacity:1;}
+				50%{opacity:0;}
+				100%{opacity:1;}
+			}
+
+			-webkit-keyframes dianhuo{
+				0%{opacity:1;}
+				50%{opacity:0;}
+				100%{opacity:1;}
+			}
+
+
+
+
+
+		@-webkit-keyframes tada {
+  0% {
+   -webkit-transform:  rotate(0);
+    transform:rotate(0);
+  }
+  
+
+  10%, 20% {
+    -webkit-transform:  rotate(-8deg);
+    transform:  rotate(-8deg);
+  }
+
+  30%, 50%, 70% {
+    -webkit-transform: rotate(8deg);
+    transform:  rotate(8deg);
+  }
+
+  40%, 60% {
+    -webkit-transform:  rotate(-8deg);
+    transform:  rotate(-8deg);
+  }
+
+  80%, 100% {
+    -webkit-transform:  rotate(0);
+    transform:rotate(0);
+  }
+}
+
+@keyframes tada {
+  0% {
+    -webkit-transform:  rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0);
+  }
+
+  10%, 20% {
+    -webkit-transform:  rotate(-8deg);
+    -ms-transform: rotate(-8deg);
+    transform:  rotate(-8deg);
+  }
+
+  30%, 50%, 70% {
+    -webkit-transform:  rotate(8deg);
+    -ms-transform:  rotate(8deg);
+    transform:  rotate(8deg);
+  }
+
+  40%, 60% {
+    -webkit-transform:  rotate(-8deg);
+    -ms-transform: rotate(-8deg);
+    transform: rotate(-8deg);
+  }
+
+  80%, 100% {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform:  rotate(0);
+  }
+}
+
+	</style>
+	<script src="./jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<div class="section0" id="section0" style="display:block;">
+		<div class="loading_logo">
+			<img src="ui/loading_logo.png" alt="">
+		</div>
+		<div class="loading" id="loading"></div>
+	</div>
+	<div class="section1">
+		<div class="bd"></div>
+		<div class="sceen1" id="screen1">
+			<div class="icons">
+				<img src="ui/icon_1.png" alt="">
+				<span style="zoom:1">210</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_2.png" alt="">
+			</div>
+			<div class="icons">
+				<img src="ui/icon_3.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_4.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_5.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_7.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_8.png" alt="">
+			</div>
+			<div class="icons">
+				<img src="ui/icon_9.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_10.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_11.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_12.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_13.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_14.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="icons">
+				<img src="ui/icon_15.png" alt="">
+				<span style="zoom:1">10</span>
+			</div>
+			<div class="dian">
+				<img src="ui/dian.png" alt="">
+			</div>
+			<div class="btn_icon"></div>
+		</div>
+
+		<div class="section2" id="section2">
+			<div id="mask"></div>
+			<div id="messages">
+				<div id="mes1">
+					<img src="ui/message_22.png" alt="">
+				</div>
+				<div id="mes2">
+					<img src="ui/message_34.png" alt="">
+				</div>
+				<div id="leftBtn">
+					<img src="ui/new_close.png" alt="">
+				</div>
+			</div>
+
+			<div class="weixin">
+				<div class="xiaoxi">
+					<img src="ui/wx_tishi.png" alt="">
+				</div>
+				<div class="leftBtn2" id="leftBtn2">
+					<img src="ui/message_close2.png" alt="">
+				</div>
+				<div class="rightBtn" id="rightBtn">
+					<img src="ui/message_yue2.png" alt="">
+				</div>
+			</div>
+
+			<div class="wx_index">
+				<div class="wx wx0">
+					<img src="ui/wx_title.png" alt="">
+					<p>微信(33)</p>
+				</div>
+				<div class="wx wx4">
+					<img src="ui/wx_4.png" alt="">
+					<span>1</span>
+				</div>
+				<div class="wx wx5">
+					<img src="ui/wx_5.png" alt="">
+					<span></span>
+				</div>
+				<div class="wx wx6">
+					<img src="ui/wx_6.png" alt="">
+					<span></span>
+				</div>
+				<div class="wx wx7">
+					<img src="ui/wx_7.png" alt="">
+					<span></span>
+				</div>
+				<div class="wx wx9">
+					<img src="ui/wx_9.png" alt="">
+					<span></span>
+				</div>
+				<div class="wx wx10">
+					<img src="ui/wx_8.png" alt="">
+					<span></span>
+				</div>
+				
+				<div class="wx wx8">
+					<img src="ui/wx_bottom.png" alt="">
+					<span></span>
+				</div>
+			</div>
+
+			<div class="tc_wx">
+				<div class="wx wx0">
+					<img src="ui/wx_title.png" alt="">
+					<p>郭姐</p>
+				</div>
+				<div class="wx wxtc">
+					<img src="ui/guojie.png" alt="">
+				</div>
+				<div class="wx wx8">
+					<img src="ui/fasong.png" alt="">
+					<span></span>
+				</div>
+			</div>
+
+			<div id="mask2"></div>
+			<div class="message2">
+
+				<div class="mes3">
+					<img src="ui/wx_exit.png" alt="">
+				</div>
+				<div class="leftBtn2">
+					<img src="ui/wx_qvxiao.png" alt="">
+				</div>
+				<div class="rightBtn" id="close_wx">
+					<img src="ui/wx_queren.png" alt="">
+				</div>
+			</div>
+
+			<div class="message3">
+				<div class="mes4">
+					<img src="ui/zfb_tishi.png" alt="">
+				</div>
+				<div class="leftBtn3">
+					<img src="ui/zfb_close.png" alt="">
+				</div>
+				<div class="rightBtn" id="close_zfb">
+					<img src="ui/zfb_open.png" alt="">
+				</div>
+			</div>
+
+			<div class="sqzhifu">
+				<div class="zf_1">
+					<img src="ui/zfb_3.png" alt="">
+				</div>
+				<div class="zf_left">
+					<img src="ui/zfb_4.png" alt="">
+				</div>
+				<div class="zf_right" id="zf_right">
+					<img src="ui/zfb_5.png" alt="">
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="section3" id="section3">
+			<div class="bd"></div>
+			<div class="call_11">
+				<img src="ui/call_11.png" alt="">
+			</div>
+			<div class="call_2">
+				<img src="ui/call_2.png" alt="">
+			</div>
+			<div class="call_3" id="call_3">
+				<img src="ui/call_3.png" alt="">
+			</div>
+			<div class="call_15">
+				<img src="ui/jietong.jpg" alt="">
+				<div class="call_4" id="call_4">
+					<img src="ui/call_4.png" alt="">
+				</div>
+			</div>
+
+			<div class="luantan">
+				<div class="lt_1">
+					<img src="ui/lt_1.png" alt="">
+				</div>
+				<div class="lt_2">
+					<img src="ui/lt_2.png" alt="">
+				</div>
+				<div class="lt_3">
+					<img src="ui/lt_3.png" alt="">
+				</div>
+				<div class="lt_4">
+					<img src="ui/lt_4.png" alt="">
+				</div>
+				<div class="lt_5">
+					<img src="ui/lt_5.png" alt="">
+				</div>
+				<div class="lt_6">
+					<img src="ui/lt_6.png" alt="">
+				</div>
+				<div class="lt_7">
+					<img src="ui/lt_7.png" alt="">
+				</div>
+				<div class="lt_8">
+					<img src="ui/lt_8.png" alt="">
+				</div>
+				<div class="lt_9">
+					<img src="ui/bai.jpg" alt="">
+				</div>
+			</div>
+
+			<div class="txsp">
+				<div class="txsp_1">
+					<img src="ui/sp_tishi13.png" alt="">
+				</div>
+				<div class="txsp_2" id="txsp_2">
+					<img src="ui/sp_btn1.png" alt="">
+				</div>
+			</div>
+			
+
+		</div>
+		<div class="section4" id="section4">
+			<div class="wz_1">
+				<img src="ui/fengdi_1.png" alt="">
+			</div>
+			<div class="wz_2">
+				<img src="ui/fengdi_12.png" alt="">
+			</div>
+			<div class="wz_3">
+				<img src="ui/fengdi_13.png" alt="">
+			</div>
+			<div class="wz_4">
+				<img src="ui/fengdi_14.png" alt="">
+			</div>
+			<div class="wz_5">
+				<img src="ui/fengdi_15.png" alt="">
+			</div>
+			<div class="wz_6">
+				<img src="ui/fengdi_16.png" alt="">
+			</div>
+			<div class="wz_7">
+				<img src="ui/fengdi_17.png" alt="">
+			</div>
+			<div class="wz_8">
+				<img src="ui/fengdi_18.png" alt="">
+			</div>
+			<div class="shang">
+				<img src="ui/shang.png" alt="">
+			</div>
+		</div>
+	</div>
+
+	<audio src="ui/duanxin2.mp3" id="dxmusic"></audio>
+	<audio src="ui/laidian.mp3" id="ldmusic"></audio>
+	<audio src="ui/dianhua.mp3" id="dianhua"></audio>
+	<audio src="ui/begin.mp3" id="dxmusic2"></audio>
+	<audio src="ui/luanting5.mp3" id="luanting"></audio>
+	<audio src="ui/ab.mp3" id="zhuti"></audio>
+
+	<script>
+		function play(){
+			 document.getElementById("dxmusic2").play();
+			  var timeid = window.setInterval(function(){
+				var i = parseInt(11*Math.random());
+				var n = parseInt($("#screen1 span").eq(i).html());
+				
+				$("#screen1 span").eq(i).animate({zoom:'1.1'},50);
+				$("#screen1 span").eq(i).animate({zoom:'1'},50);
+				$("#screen1 span").eq(i).html(n + 1);
+			},100)
+
+
+
+	    	//tanchuang
+
+			var tanc = setTimeout(function(){
+				 document.getElementById("dxmusic2").pause();
+				document.getElementById("dxmusic").play();
+				$("#section2").fadeIn(10);
+				$("#mask").fadeIn(10);
+				$("#mes1").fadeOut(10);
+				$("#mes1").fadeIn(100);
+			},3000)
+		   
+            
+            //监听touchStart
+		        var tcTime = 1;
+		        document.getElementById("leftBtn").addEventListener("touchstart",function(){
+		 
+		        if(tcTime < 2){
+		        	clearInterval(timeid);
+		        	document.getElementById("dxmusic").play();
+				$("#mask").fadeOut(10);
+				$("#mes1").fadeOut(10);
+				$("#leftBtn").fadeOut(10);
+				$("#mask").delay(500).fadeIn(10);
+				
+				setTimeout(function(){
+					document.getElementById("dxmusic").play();
+					$("#mes2").fadeIn(10);
+				    $("#leftBtn").fadeIn(10);
+				},500);
+
+				tcTime += 1;
+				
+
+			}else{
+				document.getElementById("dxmusic").play();
+				    $("#mask").fadeOut(10);
+					$("#mes2").fadeOut(10);
+				    $("#leftBtn").fadeOut(10);
+				    $(".weixin").fadeOut(10);
+
+				    setTimeout(function(){
+				    	document.getElementById("dxmusic").play();
+					
+					$(".weixin").fadeIn(10);
+				    $("#mask").fadeIn(10);
+				},500);
+
+				}
+	
+			},false)
+		        //监听微信按钮
+
+		    	document.getElementById("rightBtn").addEventListener('touchstart',function(){
+		    		document.getElementById("dxmusic").play();
+		    		$(".weixin").fadeOut(10);
+				    $("#mask").fadeOut(10);
+				    $('.wx_index').fadeIn(10);
+				    $('.tc_wx').fadeOut(10);
+
+		    	setTimeout(function(){
+		    		document.getElementById("dxmusic").play();
+		    		  $('.wx_index').fadeOut(10);
+		    		  $('.tc_wx').fadeIn(10);
+		    		    	setTimeout(function(){
+		    		  			$("#mask2").fadeIn(10);
+		    		  			$('.message2').fadeIn(10);
+		    				},1000)
+		    	},2000);
+
+		  
+
+
+		    	},false);
+
+		    	//监听支付宝弹窗
+		 		document.getElementById("close_wx").addEventListener('touchstart',function(){
+		 			document.getElementById("dxmusic").play();
+		    		$("#mask2").fadeOut(10);
+		    		$('.tc_wx').fadeOut(10);
+		    		$('.message2').fadeOut(10);
+		    			setTimeout(function(){
+		    				document.getElementById("dxmusic").play();
+		    				$("#mask2").fadeIn(10);
+		    				$(".message3").fadeIn(10);
+		    			},500)
+		    	},false)
+
+                document.getElementById("close_zfb").addEventListener('touchstart',function(){
+                	$("#mask2").fadeOut(10);
+		    		$(".message3").fadeOut(10);
+		    		$(".sqzhifu").fadeIn(10);
+                },false)
+
+                 document.getElementById("zf_right").addEventListener("touchstart",function(){
+                 	document.getElementById("ldmusic").play();
+                 	document.getElementById("ldmusic").loop = "loop";
+                	$(".sqzhifu").fadeOut(10);
+                	$(".section3").fadeIn(10);
+
+                },false)
+
+                 document.getElementById("call_3").addEventListener("touchstart",function(){
+                 	document.getElementById("ldmusic").pause();
+                 	document.getElementById("dianhua").play();
+                 	$(".call_11").fadeOut(10);
+                 	$(".call_2").fadeOut(10);
+                 	$(".call_3").fadeOut(10);
+                 	$(".call_15").fadeIn(10);
+                 		var guadiao = setTimeout(function(){
+                 			document.getElementById("dianhua").pause();
+                	$(".call_15").fadeOut(10);
+                	$(".luantan").fadeIn(500);
+                		$(".lt_1").delay(200).fadeIn(100);
+						$(".lt_8").delay(400).fadeIn(100);
+						$(".lt_6").delay(600).fadeIn(100);
+						$(".lt_4").delay(800).fadeIn(100);
+						$(".lt_5").delay(1000).fadeIn(100);
+						$(".lt_3").delay(1200).fadeIn(100);
+						$(".lt_7").delay(1400).fadeIn(100);
+						$(".lt_2").delay(1600).fadeIn(100);
+						$(".lt_9").delay(1800).fadeIn(2000);
+						setTimeout(function(){
+							$(".luantan").fadeOut(10);
+							$(".txsp").fadeIn(10);
+
+						},3800)
+                 		},16000);
+
+                 		document.getElementById("call_4").addEventListener("touchstart",function(){
+                	clearInterval(guadiao);
+                	document.getElementById("dianhua").pause();
+                	$(".call_15").fadeOut(10);
+                	$(".luantan").fadeIn(10);
+                	document.getElementById("luanting").play();
+                		$(".lt_1").delay(200).fadeIn(100);
+						$(".lt_8").delay(400).fadeIn(100);
+						$(".lt_6").delay(600).fadeIn(100);
+						$(".lt_4").delay(800).fadeIn(100);
+						$(".lt_5").delay(1000).fadeIn(100);
+						$(".lt_3").delay(1200).fadeIn(100);
+						$(".lt_7").delay(1400).fadeIn(100);
+						$(".lt_2").delay(1600).fadeIn(100);
+						$(".lt_9").delay(1800).fadeIn(2000);
+						setTimeout(function(){
+							document.getElementById("luanting").pause();
+							document.getElementById("zhuti").play();
+							$(".luantan").stop().fadeOut(10);
+							$(".txsp").fadeIn(1000);
+
+						},3800)
+               
+
+                },false)
+
+
+
+                 },false)
+                
+
+
+                document.getElementById("txsp_2").addEventListener("touchstart",function(){
+                		
+						$(".txsp").stop().fadeOut(10);
+                	
+                	$(".section4").fadeIn(10);
+                		$(".wz_1").fadeIn(1000);
+						$(".wz_2").delay(1500).fadeIn(2000);
+						$(".wz_3").delay(3000).fadeIn(2000);
+						$(".wz_4").delay(4500).fadeIn(2000);
+						$(".wz_5").delay(6000).fadeIn(2000);
+						$(".wz_6").delay(7500).fadeIn(2000);
+						$(".wz_7").delay(9000).fadeIn(2000);
+						$(".wz_8").delay(10500).fadeIn(2000);
+						setTimeout(function(){
+							$(".shang").fadeIn(200);
+						},11000)
+
+                },false)
+		    	
+
+
+				
+				
+             
+          
+		    
+	         
+		}
+			
+		
+
+	
+
+
+		
+		
+
+
+	</script>
+</body>
+</html>
